@@ -7,7 +7,7 @@ const services = [
     title: 'iPhone Screen Replacement',
     desc: 'Cracked or broken screen? Get an OEM-quality screen replacement with same-day service. Original display quality guaranteed.',
     keywords: 'iPhone screen replacement Bangalore',
-    image: 'src/assets/screen replacement.jpg',
+    image: 'screen replacement.jpg',
     badge: 'Screen Repair',
     features: ['OEM Quality', 'Same-Day Service', 'Full Warranty']
   },
@@ -16,7 +16,7 @@ const services = [
     title: 'iPhone Battery Replacement',
     desc: 'Restore your iPhone battery life to 100%. Genuine battery cells with health monitoring support.',
     keywords: 'iPhone battery replacement Bangalore',
-    image: 'src/assets/battery service.jpg',
+    image: 'battery service.jpg',
     badge: 'Battery Service',
     features: ['Genuine Cells', 'Health Monitor', '6 Month Warranty']
   },
@@ -25,7 +25,7 @@ const services = [
     title: 'iPhone Water Damage Repair',
     desc: 'Expert water damage recovery with ultrasonic cleaning. Save your data and device from liquid damage.',
     keywords: 'iPhone water damage repair Bangalore',
-    image: 'src/assets/water damage.jpg',
+    image: 'water damage.jpg',
     badge: 'Water Damage',
     features: ['Ultrasonic Clean', 'Data Recovery', 'Expert Service']
   },
@@ -34,7 +34,7 @@ const services = [
     title: 'iPhone Motherboard Repair',
     desc: "Advanced micro-soldering and IC-level motherboard repair. We fix what others can't.",
     keywords: 'iPhone motherboard repair Bangalore',
-    image: 'src/assets/mother board.jpg',
+    image: 'mother board.jpg',
     badge: 'Motherboard Repair',
     features: ['Micro-Soldering', 'IC-Level Repair', 'Advanced Tech']
   },

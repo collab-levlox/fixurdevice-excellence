@@ -9,43 +9,43 @@ interface ModelItem {
 const models: ModelItem[] = [
   {
     name: 'iPhone 11',
-    image: 'src/assets/iphone11.png',
+    image: 'iphone11.png',
   },
   {
     name: 'iPhone 12',
-    image: 'src/assets/iphone12.png',
+    image: 'iphone12.png',
   },
   {
     name: 'iPhone 13',
-    image: 'src/assets/iphone13.png',
+    image: 'iphone13.png',
   },
   {
     name: 'iPhone 14',
-    image: 'src/assets/iphone14.png',
+    image: 'iphone14.png',
   },
   {
     name: 'iPhone 15',
-    image: 'src/assets/iphone15.png',
+    image: 'iphone15.png',
   },
   {
     name: 'iPhone 11 Pro',
-    image: 'src/assets/iphone11pro.png',
+    image: 'iphone11pro.png',
   },
   {
     name: 'iPhone 12 Pro',
-    image: 'src/assets/iphone12pro.png',
+    image: 'iphone12pro.png',
   },
   {
     name: 'iPhone 13 Pro',
-    image: 'src/assets/iphone13pro.png',
+    image: 'iphone13pro.png',
   },
   {
     name: 'iPhone 14 Pro',
-    image: 'src/assets/iphone14pro.png',
+    image: 'iphone14pro.png',
   },
   {
     name: 'iPhone 15 Pro',
-    image: 'src/assets/iphone15pro.png',
+    image: 'iphone15pro.png',
   },
 ];
 

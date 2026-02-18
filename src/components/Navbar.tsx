@@ -14,7 +14,7 @@ const navLinks = [
 const companyInfo = {
   name: 'FixurDevice',
   nameHighlight: 'Device',
-  logo: '/src/assets/levlox_logo.png',
+  logo: 'levlox_logo.png',
   phone: '+919663360775',
   whatsapp: '919663360775',
   whatsappMessage: 'Hi, I need iPhone repair service',

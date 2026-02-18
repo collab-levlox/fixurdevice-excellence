@@ -5,23 +5,23 @@ import CircularGallery from './Circulargallery';
 // Using local assets
 const galleryItems = [
   {
-    image: 'src/assets/screen replacement.jpg',
+    image: 'screen replacement.jpg',
     text: 'Screen Replacement'
   },
   {
-    image: 'src/assets/battery service.jpg',
+    image: 'battery service.jpg',
     text: 'Battery Service'
   },
   {
-    image: 'src/assets/water damage.jpg',
+    image: 'water damage.jpg',
     text: 'Water Damage'
   },
   {
-    image: 'src/assets/iphone.jpg',
+    image: 'iphone.jpg',
     text: 'iPhone Chips'
   },
   {
-    image: 'src/assets/mother board.jpg',
+    image: 'mother board.jpg',
     text: 'Motherboard Repair'
   },
 ];
