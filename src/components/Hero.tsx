@@ -3,7 +3,8 @@ import { Phone, MessageCircle, Zap, Shield, CheckCircle2, ArrowRight } from 'luc
 import Orb from './Orb';
 import styles from '@/styles/Hero.module.css';
 
-const heroImagePath = '/src/assets/hero.png';
+// FIXED: Changed from '/src/assets/hero.png' to '/hero.png' for Vercel
+const heroImagePath = '/hero.png';
 
 interface Particle {
   id: number;
