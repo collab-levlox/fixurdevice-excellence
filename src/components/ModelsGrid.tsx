@@ -28,6 +28,10 @@ const models: ModelItem[] = [
     image: 'iphone15.png',
   },
   {
+    name: 'iPhone 16',
+    image: 'iphone16.png',
+  },
+  {
     name: 'iPhone 11 Pro',
     image: 'iphone11pro.png',
   },
@@ -46,6 +50,42 @@ const models: ModelItem[] = [
   {
     name: 'iPhone 15 Pro',
     image: 'iphone15pro.png',
+  },
+  {
+    name: 'iPhone 16 Pro',
+    image: 'iphone16pro.png',
+  },
+  {
+    name: 'iPhone11 Pro Max',
+    image: 'iphone11 pro max.png',
+  },
+  {
+    name: 'iPhone 12 Pro Max',
+    image: 'iphone12 pro max.png',
+  },
+  {
+    name: 'iPhone 13 Pro Max',
+    image: 'iphone13  pro max.png',
+  },
+  {
+    name: 'iPhone 14 Pro Max',
+    image: 'iphone14 pro max.png',
+  },
+  {
+    name: 'iPhone 15 Pro Max',
+    image: 'iphone15 pro max.png',
+  },
+  {
+    name: 'iPhone 16 Pro Max',
+    image: 'iphone16  pro max.png',
+  },
+  {
+    name: 'iPhone SE (2nd Gen)',
+    image: 'iphonese2.png',
+  },
+  {
+    name: 'iPhone SE (3rd Gen)',
+    image: 'iphonese3.png.png',
   },
 ];
 
@@ -70,7 +110,7 @@ const ModelsGrid = () => {
           </h2>
           
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Expert repairs for all iPhone models. From iPhone 11 to the latest iPhone 15 series.
+            Expert repairs for all iPhone models. From iPhone 11 to the latest iPhone 16 series.
           </p>
         </div>
 
