@@ -89,7 +89,7 @@ const ContactSection = () => {
   // Send email via Resend API
   const sendEmail = async (data: FormData) => {
     try {
-      const response = await fetch('http://localhost:3001/api/send-email', {
+      const response = await fetch('https://fixurdevice-backend.onrender.com/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
