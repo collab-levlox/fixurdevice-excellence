@@ -11,74 +11,88 @@ const models: ModelItem[] = [
     name: 'iPhone 11',
     image: 'iphone11.png',
   },
+    {
+    name: 'iPhone 11 Pro',
+    image: 'iphone11pro.png',
+  },
+    {
+    name: 'iPhone11 Pro Max',
+    image: 'iphone11 pro max.png',
+  },
   {
     name: 'iPhone 12',
     image: 'iphone12.png',
+  },
+    {
+    name: 'iPhone 12 Pro',
+    image: 'iphone12pro.png',
+  },
+    {
+    name: 'iPhone 12 Pro Max',
+    image: 'iphone12 pro max.png',
   },
   {
     name: 'iPhone 13',
     image: 'iphone13.png',
   },
+    {
+    name: 'iPhone 13 Pro',
+    image: 'iphone13pro.png',
+  },
+    {
+    name: 'iPhone 13 Pro Max',
+    image: 'iphone13  pro max.png',
+  },
   {
     name: 'iPhone 14',
     image: 'iphone14.png',
   },
+  
+  {
+    name: 'iPhone 14 Pro',
+    image: 'iphone14pro.png',
+  },
+    {
+    name: 'iPhone 14 Pro Max',
+    image: 'iphone14 pro max.png',
+  },
   {
     name: 'iPhone 15',
     image: 'iphone15.png',
+  },
+    {
+    name: 'iPhone 15 Pro',
+    image: 'iphone15pro.png',
+  },
+    {
+    name: 'iPhone 15 Pro Max',
+    image: 'iphone15 pro max.png',
   },
   {
     name: 'iPhone 16',
     image: 'iphone16.png',
   },
   {
-    name: 'iPhone 11 Pro',
-    image: 'iphone11pro.png',
-  },
-  {
-    name: 'iPhone 12 Pro',
-    image: 'iphone12pro.png',
-  },
-  {
-    name: 'iPhone 13 Pro',
-    image: 'iphone13pro.png',
-  },
-  {
-    name: 'iPhone 14 Pro',
-    image: 'iphone14pro.png',
-  },
-  {
-    name: 'iPhone 15 Pro',
-    image: 'iphone15pro.png',
-  },
-  {
     name: 'iPhone 16 Pro',
     image: 'iphone16pro.png',
   },
-  {
-    name: 'iPhone11 Pro Max',
-    image: 'iphone11 pro max.png',
-  },
-  {
-    name: 'iPhone 12 Pro Max',
-    image: 'iphone12 pro max.png',
-  },
-  {
-    name: 'iPhone 13 Pro Max',
-    image: 'iphone13  pro max.png',
-  },
-  {
-    name: 'iPhone 14 Pro Max',
-    image: 'iphone14 pro max.png',
-  },
-  {
-    name: 'iPhone 15 Pro Max',
-    image: 'iphone15 pro max.png',
-  },
-  {
+      {
     name: 'iPhone 16 Pro Max',
     image: 'iphone16  pro max.png',
   },
+  {
+    name: 'iPhone 17',
+    image: 'iphone17.png',
+  },
+      {
+    name: 'iPhone 17 pro',
+    image: 'iphone17 pro.png',
+  },
+      {
+    name: 'iPhone 17 pro max',
+    image: 'iphone 17 pro  max.png',
+  },
+
   {
     name: 'iPhone SE (2nd Gen)',
     image: 'iphonese2.png',
@@ -94,18 +108,6 @@ const models: ModelItem[] = [
     {
     name: 'Mackbooks',
     image: 'mackbook.png',
-  },
-      {
-    name: 'iPhone 17',
-    image: 'iphone17.png',
-  },
-      {
-    name: 'iPhone 17 pro',
-    image: 'iphone17 pro.png',
-  },
-      {
-    name: 'iPhone 17 pro max',
-    image: 'iphone 17 pro  max.png',
   },
 ];
 
