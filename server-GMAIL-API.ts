@@ -1,4 +1,5 @@
-// server.ts - FixurDevice Backend with Resend Email API
+// server.ts - FixurDevice Backend with Resend API
+// ONLY SENDS TO ADMIN - No customer emails
 // Production Ready for Render!
 
 import express from 'express';
@@ -49,167 +50,227 @@ app.post('/api/send-email', async (req, res) => {
     });
   }
 
-  const finalAdminEmail = adminEmail || 'fixurdevice.in@gmail.com';
-  const finalUserEmail = userEmail || email;
+  const finalAdminEmail = adminEmail || 'levloxtech@gmail.com';
 
-  console.log('[Email] Processing booking for:', { name, phone, model, email });
+  console.log('[Email] New Booking Received:');
+  console.log('  Name:', name);
+  console.log('  Email:', email);
+  console.log('  Phone:', phone);
+  console.log('  Model:', model);
+  console.log('  Issue:', issue);
 
   try {
-    // Send email to Admin (FixurDevice)
+    // ONLY send to admin (verified email)
     console.log('[Email] Sending admin notification to:', finalAdminEmail);
     
     const { data: emailToAdmin, error: errorToAdmin } = await resend.emails.send({
-      from: 'FixurDevice <onboarding@resend.dev>', // Resend test domain
+      from: 'FixurDevice <onboarding@resend.dev>',
       to: finalAdminEmail,
       replyTo: email, // Customer's email for easy reply
-      subject: `📞 New iPhone Repair Booking from ${name}`,
+      subject: `📱 NEW LEAD: ${name} - ${model} Repair Request`,
       html: `
         <!DOCTYPE html>
         <html>
         <head>
           <style>
             body {
-              font-family: 'Arial', sans-serif;
-              background-color: #0a0a0f;
-              color: #ffffff;
+              font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
               margin: 0;
               padding: 20px;
             }
             .container {
-              max-width: 600px;
+              max-width: 700px;
               margin: 0 auto;
-              background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-              border-radius: 20px;
-              padding: 40px;
-              border: 2px solid #06b6d4;
-              box-shadow: 0 10px 40px rgba(6, 182, 212, 0.3);
+              background: #ffffff;
+              border-radius: 12px;
+              box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+              overflow: hidden;
             }
             .header {
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              padding: 40px;
               text-align: center;
-              margin-bottom: 30px;
-              padding-bottom: 20px;
-              border-bottom: 2px solid #06b6d4;
             }
-            .logo {
-              font-size: 32px;
-              font-weight: 900;
-              background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              margin-bottom: 10px;
+            .header h1 {
+              margin: 0;
+              font-size: 28px;
+              font-weight: 700;
             }
-            .subtitle {
-              color: #0891b2;
+            .header p {
+              margin: 10px 0 0 0;
+              opacity: 0.9;
               font-size: 14px;
-              text-transform: uppercase;
-              letter-spacing: 3px;
+            }
+            .content {
+              padding: 40px;
+            }
+            .alert {
+              background: #fff3cd;
+              border-left: 5px solid #ffc107;
+              padding: 15px;
+              margin-bottom: 20px;
+              border-radius: 4px;
+              font-weight: 500;
+              color: #856404;
             }
             .field {
-              margin: 20px 0;
-              padding: 15px;
-              background: rgba(255, 255, 255, 0.05);
-              border-radius: 10px;
-              border-left: 4px solid #06b6d4;
+              margin-bottom: 25px;
+              padding-bottom: 15px;
+              border-bottom: 1px solid #eee;
+            }
+            .field:last-of-type {
+              border-bottom: none;
+              margin-bottom: 0;
+              padding-bottom: 0;
             }
             .label {
-              color: #0891b2;
+              color: #667eea;
               font-size: 12px;
+              font-weight: 700;
               text-transform: uppercase;
-              letter-spacing: 2px;
-              margin-bottom: 5px;
+              letter-spacing: 1px;
+              display: block;
+              margin-bottom: 8px;
             }
             .value {
-              color: #ffffff;
+              color: #333;
               font-size: 16px;
+              font-weight: 500;
+            }
+            .value a {
+              color: #667eea;
+              text-decoration: none;
               font-weight: 600;
             }
-            .message-box {
-              background: rgba(6, 182, 212, 0.1);
-              border: 2px solid #06b6d4;
-              border-radius: 10px;
-              padding: 20px;
-              margin: 20px 0;
+            .value a:hover {
+              text-decoration: underline;
             }
-            .footer {
+            .issue-box {
+              background: #f8f9fa;
+              border-left: 4px solid #667eea;
+              padding: 15px;
+              border-radius: 4px;
+              margin-top: 8px;
+              line-height: 1.6;
+              color: #555;
+            }
+            .action-box {
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+              padding: 20px;
+              border-radius: 8px;
               text-align: center;
               margin-top: 30px;
-              padding-top: 20px;
-              border-top: 2px solid #06b6d4;
-              color: #0891b2;
+            }
+            .action-box h2 {
+              margin: 0 0 15px 0;
+              font-size: 18px;
+            }
+            .action-box .phone {
+              font-size: 28px;
+              font-weight: 700;
+              margin: 15px 0;
+              letter-spacing: 2px;
+            }
+            .action-box a {
+              display: inline-block;
+              background: white;
+              color: #667eea;
+              padding: 12px 30px;
+              border-radius: 6px;
+              text-decoration: none;
+              font-weight: 600;
+              margin: 10px 5px;
+              transition: transform 0.2s;
+            }
+            .action-box a:hover {
+              transform: scale(1.05);
+            }
+            .footer {
+              background: #f8f9fa;
+              padding: 25px 40px;
+              border-top: 1px solid #eee;
               font-size: 12px;
+              color: #666;
+              text-align: center;
+            }
+            .footer p {
+              margin: 5px 0;
             }
             .badge {
               display: inline-block;
-              background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-              color: #ffffff;
-              padding: 5px 15px;
+              background: #667eea;
+              color: white;
+              padding: 4px 12px;
               border-radius: 20px;
               font-size: 11px;
-              font-weight: bold;
+              font-weight: 600;
+              margin: 0 4px;
               text-transform: uppercase;
-              letter-spacing: 1px;
-              margin: 5px;
+              letter-spacing: 0.5px;
             }
           </style>
         </head>
         <body>
           <div class="container">
             <div class="header">
-              <div class="logo">FixurDevice</div>
-              <div class="subtitle">Premium iPhone Service</div>
+              <h1>📱 NEW REPAIR LEAD</h1>
+              <p>Customer booking received - Action required!</p>
             </div>
 
-            <h2 style="color: #06b6d4; text-align: center; margin-bottom: 30px;">
-              🔧 New Repair Booking
-            </h2>
-
-            <div class="field">
-              <div class="label">Customer Name</div>
-              <div class="value">${name}</div>
-            </div>
-
-            <div class="field">
-              <div class="label">Email Address</div>
-              <div class="value">${email}</div>
-            </div>
-
-            <div class="field">
-              <div class="label">Phone Number</div>
-              <div class="value">${phone}</div>
-            </div>
-
-            <div class="field">
-              <div class="label">iPhone Model</div>
-              <div class="value">${model}</div>
-            </div>
-
-            <div class="message-box">
-              <div class="label">Issue Description</div>
-              <div class="value" style="margin-top: 10px; line-height: 1.6;">
-                ${issue.replace(/\n/g, '<br/>')}
+            <div class="content">
+              <div class="alert">
+                ⚡ <strong>High Priority:</strong> Customer is waiting for your call!
               </div>
-            </div>
 
-            <div style="background: #f0fdf4; border-left: 4px solid #22c55e; padding: 20px; border-radius: 10px; margin: 20px 0;">
-              <h3 style="color: #15803d; margin-top: 0;">⏱️ Action Required</h3>
-              <p style="color: #333;"><strong>Please call this customer within 30 minutes:</strong></p>
-              <p style="color: #333; font-size: 18px; background: white; padding: 10px; border-radius: 4px;">
-                <a href="tel:${phone}" style="color: #06b6d4; text-decoration: none; font-weight: bold;">${phone}</a>
-              </p>
+              <div class="field">
+                <span class="label">Customer Name</span>
+                <div class="value">${name}</div>
+              </div>
+
+              <div class="field">
+                <span class="label">📧 Email Address</span>
+                <div class="value"><a href="mailto:${email}">${email}</a></div>
+              </div>
+
+              <div class="field">
+                <span class="label">📞 Phone Number</span>
+                <div class="value"><a href="tel:${phone}">${phone}</a></div>
+              </div>
+
+              <div class="field">
+                <span class="label">📱 Device Model</span>
+                <div class="value">${model}</div>
+              </div>
+
+              <div class="field">
+                <span class="label">🔧 Issue Description</span>
+                <div class="issue-box">${issue.replace(/\n/g, '<br>')}</div>
+              </div>
+
+              <div class="action-box">
+                <h2>⏱️ NEXT STEPS</h2>
+                <p>Call this customer as soon as possible!</p>
+                <div class="phone"><a href="tel:${phone}">${phone}</a></div>
+                <p style="margin-bottom: 15px; font-size: 13px;">
+                  Or reply to this email to contact them
+                </p>
+                <a href="tel:${phone}">📞 Call Now</a>
+                <a href="mailto:${email}">📧 Email Reply</a>
+              </div>
             </div>
 
             <div class="footer">
-              <div style="margin-bottom: 15px;">
-                <span class="badge">Same-day Service</span>
+              <p><strong>FixurDevice Booking System</strong></p>
+              <p>
+                <span class="badge">Same Day Service</span>
                 <span class="badge">Genuine Parts</span>
-                <span class="badge">6-Month Warranty</span>
-              </div>
-              <p>This email was sent from FixurDevice booking system</p>
-              <p>Reply directly to this email to contact the customer</p>
-              <p style="margin-top: 15px;">
-                <strong>FixurDevice</strong><br/>
-                Bangalore<br/>
-                <a href="tel:+919663360775" style="color: #06b6d4; text-decoration: none;">+91 9663360775</a>
+                <span class="badge">6 Month Warranty</span>
+              </p>
+              <p style="margin-top: 15px; color: #999;">
+                This is an automated email from FixurDevice. Customer information is secure and confidential.
               </p>
             </div>
           </div>
@@ -219,138 +280,23 @@ app.post('/api/send-email', async (req, res) => {
     });
 
     if (errorToAdmin) {
-      console.error('[Email] Admin email failed:', errorToAdmin);
-    } else {
-      console.log(`✅ Admin notification sent to ${finalAdminEmail}`);
+      console.error('[Email] ❌ Failed to send admin notification:', errorToAdmin);
+      throw errorToAdmin;
     }
 
-    // Send auto-reply to customer
-    console.log('[Email] Sending confirmation to customer:', finalUserEmail);
-    
-    const { data: emailToCustomer, error: errorToCustomer } = await resend.emails.send({
-      from: 'FixurDevice <onboarding@resend.dev>',
-      to: finalUserEmail,
-      subject: '✅ Your iPhone Repair Booking Confirmed - FixurDevice',
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <style>
-            body {
-              font-family: 'Arial', sans-serif;
-              background-color: #0a0a0f;
-              color: #ffffff;
-              margin: 0;
-              padding: 20px;
-            }
-            .container {
-              max-width: 600px;
-              margin: 0 auto;
-              background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-              border-radius: 20px;
-              padding: 40px;
-              border: 2px solid #06b6d4;
-            }
-            .header {
-              text-align: center;
-              margin-bottom: 30px;
-            }
-            .logo {
-              font-size: 36px;
-              font-weight: 900;
-              background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-            }
-            .content {
-              line-height: 1.8;
-              color: #D6CCEA;
-            }
-            .highlight {
-              background: rgba(6, 182, 212, 0.2);
-              border-left: 4px solid #06b6d4;
-              padding: 15px;
-              margin: 20px 0;
-              border-radius: 5px;
-            }
-            .footer {
-              text-align: center;
-              margin-top: 30px;
-              padding-top: 20px;
-              border-top: 2px solid #06b6d4;
-              color: #0891b2;
-              font-size: 12px;
-            }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <div class="logo">FixurDevice</div>
-              <p style="color: #0891b2; text-transform: uppercase; letter-spacing: 3px; font-size: 12px;">
-                Premium iPhone Service
-              </p>
-            </div>
-
-            <div class="content">
-              <h2 style="color: #06b6d4;">Hi ${name}! 👋</h2>
-              
-              <p>Thank you for booking with <strong>FixurDevice</strong>!</p>
-              
-              <div class="highlight">
-                <strong>We've received your repair request for:</strong><br/>
-                📱 Device: ${model}<br/>
-                🔧 Issue: ${issue.substring(0, 50)}${issue.length > 50 ? '...' : ''}
-              </div>
-
-              <p><strong>Our manager will call you within 30 minutes</strong> to:</p>
-              <ul>
-                <li>✓ Confirm your booking</li>
-                <li>✓ Provide FREE diagnosis</li>
-                <li>✓ Give you a quotation</li>
-                <li>✓ Arrange pickup or appointment</li>
-              </ul>
-
-              <div style="background: rgba(249, 240, 255, 0.1); border-left: 4px solid #06b6d4; padding: 15px; border-radius: 5px; margin: 20px 0;">
-                <p style="color: #fbbf24;"><strong>💡 Important:</strong> Keep your phone nearby! Our manager will call you from <strong>+91 9663360775</strong></p>
-              </div>
-
-              <p style="margin-top: 30px;">
-                <strong>Contact Us:</strong><br/>
-                📧 Email: fixurdevice.in@gmail.com<br/>
-                📞 Phone: +91 9663360775<br/>
-                📍 Location: Bangalore, Karnataka
-              </p>
-            </div>
-
-            <div class="footer">
-              <p>Same-day Service • Genuine Parts • 6-Month Warranty</p>
-              <p>© 2024 FixurDevice. All rights reserved.</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `,
-    });
-
-    if (errorToCustomer) {
-      console.log('[Email] Auto-reply failed (non-critical):', errorToCustomer);
-    } else {
-      console.log(`✅ Customer confirmation sent to ${finalUserEmail}`);
-    }
-
-    console.log('[Email] ✅ Booking processed successfully!');
+    console.log('[Email] ✅ Admin notification sent successfully');
+    console.log('[Email] ✅ Booking processed - Admin will contact customer');
 
     return res.status(200).json({ 
       success: true, 
-      message: `Booking received! Confirmation sent to ${finalUserEmail}` 
+      message: 'Booking received! Our team will contact you shortly.' 
     });
 
   } catch (error: any) {
-    console.error('[Email] Server error:', error);
+    console.error('[Email] ❌ Server error:', error);
     return res.status(500).json({ 
       success: false,
-      error: 'Failed to send email',
+      error: 'Failed to process booking. Please try again.',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
@@ -360,7 +306,7 @@ app.post('/api/send-email', async (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
-    message: 'FixurDevice Email Server (Resend) is running',
+    message: 'FixurDevice Email Server is running',
     provider: 'Resend',
     timestamp: new Date().toISOString()
   });
@@ -385,13 +331,13 @@ app.listen(PORT, () => {
   console.log(`✅ FixurDevice Email Server is RUNNING!`);
   console.log(`🌐 Server: http://localhost:${PORT}`);
   console.log(`📧 Provider: Resend (HTTPS API)`);
-  console.log(`📬 Sending to: fixurdevice.in@gmail.com`);
-  console.log(`\n📧 Email endpoint: POST http://localhost:${PORT}/api/send-email`);
-  console.log(`💚 Health check: GET http://localhost:${PORT}/api/health`);
-  console.log(`\n📝 Configuration:`);
-  console.log(`   Sending FROM: FixurDevice <onboarding@resend.dev>`);
-  console.log(`   Admin notifications to: fixurdevice.in@gmail.com`);
-  console.log(`   Customer emails to: Their provided email`);
-  console.log(`   Status: ✅ Ready`);
+  console.log(`📬 Admin Notifications: levloxtech@gmail.com`);
+  console.log(`\n📊 MODE: ADMIN ONLY (No customer emails)`);
+  console.log(`\n📝 Features:`);
+  console.log(`   ✓ Admin gets all booking notifications`);
+  console.log(`   ✓ Easy reply to customer email`);
+  console.log(`   ✓ Click-to-call functionality`);
+  console.log(`   ✓ Beautiful email template`);
+  console.log(`   ✓ Professional lead management`);
   console.log(`\n📱 ======================================\n`);
 });
