@@ -16,8 +16,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// ✅ COMPLETE CORS CONFIGURATION - ALL DOMAINS
-app.use(cors({
+// ✅ COMPLETE CORS CONFIGURATION - FIXED
+const corsOptions = {
   origin: [
     // Development
     'http://localhost:5173',
@@ -33,16 +33,15 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200
-}));
+};
 
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
   next();
 });
-
-app.options('*', cors()); // Enable preflight for all routes
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
