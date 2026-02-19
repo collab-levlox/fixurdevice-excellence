@@ -16,10 +16,24 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// FIXED CORS - NOW INCLUDES PRODUCTION DOMAINS
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:8080', 'http://localhost:8081', 'http://localhost:3000'],
+  origin: [
+    // Development
+    'http://localhost:5173',
+    'http://localhost:8080',
+    'http://localhost:8081',
+    'http://localhost:3000',
+    // Production - ADDED THESE
+    'https://fixurdevice.in',
+    'https://www.fixurdevice.in',
+    'https://fixurdevice-excellence.vercel.app'
+  ],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 app.use(express.json());
 
 app.use((req, res, next) => {
