@@ -10,7 +10,7 @@ const footerConfig = {
     city: 'Bangalore - 560038',
   },
   phone: '+919663360775',
-  email: 'support@fixurdevice.com',
+  email: 'fixurdevice.in@gmail.com',
   services: [
     { label: 'Screen Replacement', href: '#services' },
     { label: 'Battery Replacement', href: '#services' },
