@@ -86,9 +86,13 @@ const ContactSection = () => {
     }));
   };
 
-  // Send email via Resend API
+  // Send email via backend
   const sendEmail = async (data: FormData) => {
     try {
+      console.log('[Frontend] Sending email to backend...');
+      console.log('[Frontend] Backend URL: https://fixurdevice-backend.onrender.com/api/send-email');
+      console.log('[Frontend] Data:', data);
+
       const response = await fetch('https://fixurdevice-backend.onrender.com/api/send-email', {
         method: 'POST',
         headers: {
@@ -104,15 +108,18 @@ const ContactSection = () => {
         }),
       });
 
+      console.log('[Frontend] Response status:', response.status);
+
       const result = await response.json();
+      console.log('[Frontend] Response:', result);
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to send email please try again');
+        throw new Error(result.error || 'Failed to send email');
       }
 
       return result;
     } catch (err) {
-      console.error('Email error:', err);
+      console.error('[Frontend] Email error:', err);
       throw err;
     }
   };
@@ -146,6 +153,7 @@ const ContactSection = () => {
       setTimeout(() => setSubmitted(false), 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
+      console.error('[Frontend] Error:', err);
     } finally {
       setLoading(false);
     }

@@ -12,17 +12,19 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'fixurdevice.in@gmail.com',
-    pass: process.env.GMAIL_PASSWORD, // Use App Password from Gmail
+    pass: process.env.GMAIL_PASSWORD,
   },
 });
 
-// ✅ FIXED CORS - NOW INCLUDES ALL PRODUCTION DOMAINS
+// ✅ COMPLETE CORS CONFIGURATION - ALL DOMAINS
 app.use(cors({
   origin: [
+    // Development
     'http://localhost:5173',
-    'http://localhost:8080', 
+    'http://localhost:8080',
     'http://localhost:8081',
     'http://localhost:3000',
+    // Production
     'https://fixurdevice.in',
     'https://www.fixurdevice.in',
     'https://fixurdevice-excellence.vercel.app'
@@ -30,13 +32,17 @@ app.use(cors({
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 200
 }));
+
 app.use(express.json());
 
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.path}`);
   next();
 });
+
+app.options('*', cors()); // Enable preflight for all routes
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
@@ -45,6 +51,8 @@ app.get('/api/health', (req, res) => {
 app.post('/api/send-email', async (req, res) => {
   try {
     const { adminEmail, userEmail, name, phone, model, issue } = req.body;
+
+    console.log('[Email] Received request:', { adminEmail, userEmail, name, phone, model });
 
     if (!adminEmail || !userEmail || !name || !phone || !model || !issue) {
       console.error('[Email] Missing fields');
@@ -107,7 +115,7 @@ app.post('/api/send-email', async (req, res) => {
     
     const customerMailOptions = {
       from: 'fixurdevice.in@gmail.com',
-      to: userEmail, // Customer's email
+      to: userEmail,
       subject: `✅ Your iPhone Repair Booking Confirmed - FixurDevice`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
