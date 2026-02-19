@@ -1,8 +1,9 @@
+'use client';
+
 import { Phone, Mail, MapPin, Clock, MessageCircle, PhoneCall, Calendar, Loader } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useState, FormEvent } from 'react';
 
-// Dynamic Configuration
 const contactConfig = {
   company: {
     name: 'FixurDevice',
@@ -15,7 +16,7 @@ const contactConfig = {
     phone: '+919663360775',
     email: 'fixurdevice.in@gmail.com',
     whatsapp: '919663360775',
-    adminEmail: 'fixurdevice.in@gmail.com',
+    adminEmail: 'levloxtech@gmail.com',
   },
   businessHours: [
     { day: 'Monday - Friday', time: '9:00 AM – 8:00 PM', isOpen: true },
@@ -77,7 +78,6 @@ const ContactSection = () => {
           model: data.model,
           issue: data.issue,
           adminEmail: contactConfig.contact.adminEmail,
-          userEmail: data.email,
         }),
       });
 

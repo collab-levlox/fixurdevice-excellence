@@ -1,7 +1,3 @@
-// server.ts - FixurDevice Backend with Resend API
-// ONLY SENDS TO ADMIN - No customer emails
-// Production Ready for Render!
-
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -12,28 +8,23 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Validate environment variables
 if (!process.env.RESEND_API_KEY) {
   console.error('⚠️ WARNING: RESEND_API_KEY is not set!');
-  console.error('Please set RESEND_API_KEY in your environment variables.');
 }
 
-// Initialize Resend
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Middleware - Allow all origins for CORS
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
 }));
+
 app.use(express.json());
 
-// Email endpoint
 app.post('/api/send-email', async (req, res) => {
-  const { name, email, phone, model, issue, adminEmail, userEmail } = req.body;
+  const { name, email, phone, model, issue, adminEmail } = req.body;
 
-  // Validate required fields
   if (!name || !email || !phone || !model || !issue) {
     return res.status(400).json({ 
       success: false,
@@ -41,7 +32,6 @@ app.post('/api/send-email', async (req, res) => {
     });
   }
 
-  // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({ 
@@ -52,22 +42,20 @@ app.post('/api/send-email', async (req, res) => {
 
   const finalAdminEmail = adminEmail || 'levloxtech@gmail.com';
 
-  console.log('[Email] New Booking Received:');
+  console.log('[Email] New Booking:');
   console.log('  Name:', name);
   console.log('  Email:', email);
   console.log('  Phone:', phone);
   console.log('  Model:', model);
-  console.log('  Issue:', issue);
 
   try {
-    // ONLY send to admin (verified email)
-    console.log('[Email] Sending admin notification to:', finalAdminEmail);
+    console.log('[Email] Sending to admin:', finalAdminEmail);
     
     const { data: emailToAdmin, error: errorToAdmin } = await resend.emails.send({
       from: 'FixurDevice <onboarding@resend.dev>',
       to: finalAdminEmail,
-      replyTo: email, // Customer's email for easy reply
-      subject: `📱 NEW LEAD: ${name} - ${model} Repair Request`,
+      replyTo: email,
+      subject: `📱 NEW LEAD: ${name} - ${model} Repair`,
       html: `
         <!DOCTYPE html>
         <html>
@@ -144,9 +132,6 @@ app.post('/api/send-email', async (req, res) => {
               text-decoration: none;
               font-weight: 600;
             }
-            .value a:hover {
-              text-decoration: underline;
-            }
             .issue-box {
               background: #f8f9fa;
               border-left: 4px solid #667eea;
@@ -183,10 +168,6 @@ app.post('/api/send-email', async (req, res) => {
               text-decoration: none;
               font-weight: 600;
               margin: 10px 5px;
-              transition: transform 0.2s;
-            }
-            .action-box a:hover {
-              transform: scale(1.05);
             }
             .footer {
               background: #f8f9fa;
@@ -195,9 +176,6 @@ app.post('/api/send-email', async (req, res) => {
               font-size: 12px;
               color: #666;
               text-align: center;
-            }
-            .footer p {
-              margin: 5px 0;
             }
             .badge {
               display: inline-block;
@@ -209,7 +187,6 @@ app.post('/api/send-email', async (req, res) => {
               font-weight: 600;
               margin: 0 4px;
               text-transform: uppercase;
-              letter-spacing: 0.5px;
             }
           </style>
         </head>
@@ -222,7 +199,7 @@ app.post('/api/send-email', async (req, res) => {
 
             <div class="content">
               <div class="alert">
-                ⚡ <strong>High Priority:</strong> Customer is waiting for your call!
+                ⚡ <strong>Priority:</strong> Customer is waiting for your call!
               </div>
 
               <div class="field">
@@ -231,46 +208,40 @@ app.post('/api/send-email', async (req, res) => {
               </div>
 
               <div class="field">
-                <span class="label">📧 Email Address</span>
+                <span class="label">📧 Email</span>
                 <div class="value"><a href="mailto:${email}">${email}</a></div>
               </div>
 
               <div class="field">
-                <span class="label">📞 Phone Number</span>
+                <span class="label">📞 Phone</span>
                 <div class="value"><a href="tel:${phone}">${phone}</a></div>
               </div>
 
               <div class="field">
-                <span class="label">📱 Device Model</span>
+                <span class="label">📱 Device</span>
                 <div class="value">${model}</div>
               </div>
 
               <div class="field">
-                <span class="label">🔧 Issue Description</span>
+                <span class="label">🔧 Issue</span>
                 <div class="issue-box">${issue.replace(/\n/g, '<br>')}</div>
               </div>
 
               <div class="action-box">
-                <h2>⏱️ NEXT STEPS</h2>
-                <p>Call this customer as soon as possible!</p>
+                <h2>⏱️ CALL THIS CUSTOMER NOW</h2>
                 <div class="phone"><a href="tel:${phone}">${phone}</a></div>
-                <p style="margin-bottom: 15px; font-size: 13px;">
-                  Or reply to this email to contact them
-                </p>
-                <a href="tel:${phone}">📞 Call Now</a>
-                <a href="mailto:${email}">📧 Email Reply</a>
+                <p style="margin: 15px 0; font-size: 13px;">Or reply to this email to contact them</p>
+                <a href="tel:${phone}">📞 Call</a>
+                <a href="mailto:${email}">📧 Email</a>
               </div>
             </div>
 
             <div class="footer">
-              <p><strong>FixurDevice Booking System</strong></p>
+              <p><strong>FixurDevice - Premium iPhone Service</strong></p>
               <p>
-                <span class="badge">Same Day Service</span>
+                <span class="badge">Same Day</span>
                 <span class="badge">Genuine Parts</span>
                 <span class="badge">6 Month Warranty</span>
-              </p>
-              <p style="margin-top: 15px; color: #999;">
-                This is an automated email from FixurDevice. Customer information is secure and confidential.
               </p>
             </div>
           </div>
@@ -280,12 +251,14 @@ app.post('/api/send-email', async (req, res) => {
     });
 
     if (errorToAdmin) {
-      console.error('[Email] ❌ Failed to send admin notification:', errorToAdmin);
-      throw errorToAdmin;
+      console.error('[Email] Failed:', errorToAdmin);
+      return res.status(500).json({ 
+        success: false, 
+        error: 'Failed to send notification' 
+      });
     }
 
-    console.log('[Email] ✅ Admin notification sent successfully');
-    console.log('[Email] ✅ Booking processed - Admin will contact customer');
+    console.log('[Email] ✅ Admin email sent');
 
     return res.status(200).json({ 
       success: true, 
@@ -293,51 +266,37 @@ app.post('/api/send-email', async (req, res) => {
     });
 
   } catch (error: any) {
-    console.error('[Email] ❌ Server error:', error);
+    console.error('[Email] Error:', error);
     return res.status(500).json({ 
       success: false,
-      error: 'Failed to process booking. Please try again.',
-      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: 'Failed to process booking'
     });
   }
 });
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
-    message: 'FixurDevice Email Server is running',
-    provider: 'Resend',
+    message: 'FixurDevice Server is running',
     timestamp: new Date().toISOString()
   });
 });
 
-// Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'FixurDevice Email Server',
-    version: '1.0.0',
-    status: 'running',
-    endpoints: {
-      health: '/api/health',
-      sendEmail: '/api/send-email (POST)'
-    }
+    status: 'running'
   });
 });
 
-// Start server
 app.listen(PORT, () => {
   console.log(`\n📱 ======================================`);
-  console.log(`✅ FixurDevice Email Server is RUNNING!`);
+  console.log(`✅ FixurDevice Email Server RUNNING`);
   console.log(`🌐 Server: http://localhost:${PORT}`);
-  console.log(`📧 Provider: Resend (HTTPS API)`);
-  console.log(`📬 Admin Notifications: levloxtech@gmail.com`);
-  console.log(`\n📊 MODE: ADMIN ONLY (No customer emails)`);
-  console.log(`\n📝 Features:`);
-  console.log(`   ✓ Admin gets all booking notifications`);
-  console.log(`   ✓ Easy reply to customer email`);
-  console.log(`   ✓ Click-to-call functionality`);
-  console.log(`   ✓ Beautiful email template`);
-  console.log(`   ✓ Professional lead management`);
+  console.log(`📧 Provider: Resend API`);
+  console.log(`📬 Admin: levloxtech@gmail.com`);
+  console.log(`\n✓ Admin gets all leads`);
+  console.log(`✓ CORS enabled`);
+  console.log(`✓ Production ready`);
   console.log(`\n📱 ======================================\n`);
 });
