@@ -95,6 +95,18 @@ const models: ModelItem[] = [
     name: 'Mackbooks',
     image: 'mackbook.png',
   },
+      {
+    name: 'Mackbooks',
+    image: 'iphone17.png',
+  },
+      {
+    name: 'Mackbooks',
+    image: 'iphone17 pro.png',
+  },
+      {
+    name: 'Mackbooks',
+    image: 'iphone 17 pro  max.png',
+  },
 ];
 
 const ModelsGrid = () => {
