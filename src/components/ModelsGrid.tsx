@@ -96,15 +96,15 @@ const models: ModelItem[] = [
     image: 'mackbook.png',
   },
       {
-    name: 'Mackbooks',
+    name: 'iPhone 17',
     image: 'iphone17.png',
   },
       {
-    name: 'Mackbooks',
+    name: 'iPhone 17 pro',
     image: 'iphone17 pro.png',
   },
       {
-    name: 'Mackbooks',
+    name: 'iPhone 17 pro max',
     image: 'iphone 17 pro  max.png',
   },
 ];
