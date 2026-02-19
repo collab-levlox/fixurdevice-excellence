@@ -107,7 +107,7 @@ const ContactSection = () => {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to send email');
+        throw new Error(result.error || 'Failed to send email please try again');
       }
 
       return result;
