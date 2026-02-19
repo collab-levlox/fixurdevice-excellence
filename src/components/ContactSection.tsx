@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin, Clock, MessageCircle, PhoneCall, Calendar, Loader 
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { useState, FormEvent } from 'react';
 
-// Dynamic Configuration - Easy to modify
+// Dynamic Configuration
 const contactConfig = {
   company: {
     name: 'FixurDevice',
@@ -15,6 +15,7 @@ const contactConfig = {
     phone: '+919663360775',
     email: 'fixurdevice.in@gmail.com',
     whatsapp: '919663360775',
+    adminEmail: 'fixurdevice.in@gmail.com',
   },
   businessHours: [
     { day: 'Monday - Friday', time: '9:00 AM – 8:00 PM', isOpen: true },
@@ -22,37 +23,10 @@ const contactConfig = {
     { day: 'Sunday', time: 'Closed', isOpen: false },
   ],
   iPhoneModels: [
-    'iPhone 11',
-    'iPhone 12',
-    'iPhone 13',
-    'iPhone 14',
-    'iPhone 15',
-    'iPhone 16',
-    'iPhone 11 Pro',
-    'iPhone 12 Pro',
-    'iPhone 13 Pro',
-    'iPhone 14 Pro',
-    'iPhone 15 Pro',
-    'iPhone 16 Pro',
-    'iPhone 11 Pro Max',
-    'iPhone 12 Pro Max',
-    'iPhone 13 Pro Max',
-    'iPhone 14 Pro Max',
-    'iPhone 15 Pro Max',
-    'iPhone 16 Pro Max',
-    'iPhone SE (2nd Gen)',
-    'iPhone SE (3rd Gen)',
-    'Apple Watch',
-    'MacBook',
-    'iPhone 17',
-    'iPhone 17 Pro',
-    'iPhone 17 Pro Max',
-    'Other',
-  ],
-  trustStats: [
-    { icon: '⭐', label: '4.9/5 Rating', desc: '2,000+ reviews' },
-    { icon: '✓', label: '100% Verified', desc: 'Real customers' },
-    { icon: '🚀', label: 'Same Day', desc: 'Service available' },
+    'iPhone 11', 'iPhone 12', 'iPhone 13', 'iPhone 14', 'iPhone 15', 'iPhone 16',
+    'iPhone 11 Pro', 'iPhone 12 Pro', 'iPhone 13 Pro', 'iPhone 14 Pro', 'iPhone 15 Pro', 'iPhone 16 Pro',
+    'iPhone 11 Pro Max', 'iPhone 12 Pro Max', 'iPhone 13 Pro Max', 'iPhone 14 Pro Max', 'iPhone 15 Pro Max', 'iPhone 16 Pro Max',
+    'iPhone SE (2nd Gen)', 'iPhone SE (3rd Gen)', 'Apple Watch', 'MacBook', 'iPhone 17', 'iPhone 17 Pro', 'iPhone 17 Pro Max', 'Other',
   ],
 };
 
@@ -77,7 +51,6 @@ const ContactSection = () => {
     issue: '',
   });
 
-  // Handle form input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({
@@ -86,7 +59,6 @@ const ContactSection = () => {
     }));
   };
 
-  // Send email via backend
   const sendEmail = async (data: FormData) => {
     try {
       console.log('[Frontend] Sending email to backend...');
@@ -99,12 +71,13 @@ const ContactSection = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          adminEmail: contactConfig.contact.email,
-          userEmail: data.email,
           name: data.name,
+          email: data.email,
           phone: data.phone,
           model: data.model,
           issue: data.issue,
+          adminEmail: contactConfig.contact.adminEmail,
+          userEmail: data.email,
         }),
       });
 
@@ -124,32 +97,26 @@ const ContactSection = () => {
     }
   };
 
-  // Handle form submission
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
     try {
-      // Validate form
       if (!formData.name || !formData.email || !formData.phone || !formData.model || !formData.issue) {
         throw new Error('Please fill in all fields');
       }
 
-      // Validate email format
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         throw new Error('Please enter a valid email address');
       }
 
-      // Send email
       await sendEmail(formData);
 
-      // Success
       setSubmitted(true);
       setFormData({ name: '', email: '', phone: '', model: '', issue: '' });
       
-      // Reset after 3 seconds
       setTimeout(() => setSubmitted(false), 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -161,11 +128,9 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="relative section-padding overflow-hidden" ref={ref} aria-label="Contact Us">
-      {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
 
       <div className="container-narrow relative z-10">
-        {/* Header */}
         <div className="text-center mb-16 animate-on-scroll px-4">
           <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 backdrop-blur-sm">
             <Phone className="w-4 h-4 text-primary animate-pulse" />
@@ -181,17 +146,11 @@ const ContactSection = () => {
           </p>
         </div>
 
-        {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 mb-16 animate-on-scroll px-4">
-          
-          {/* Left: Contact Info + Hours */}
           <div className="lg:col-span-2 space-y-6">
-            
-            {/* Contact Details Card */}
             <div className="glass rounded-2xl p-6 sm:p-8 border border-white/10 hover:border-white/20 transition-all duration-300 space-y-6">
               <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">Contact Details</h3>
               
-              {/* Address */}
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
                   <MapPin className="w-5 h-5 text-primary" />
@@ -214,7 +173,6 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Phone */}
               <div className="flex items-start gap-4 pt-4 border-t border-white/10">
                 <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
                   <Phone className="w-5 h-5 text-primary" />
@@ -230,7 +188,6 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Email */}
               <div className="flex items-start gap-4 pt-4 border-t border-white/10">
                 <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
                   <Mail className="w-5 h-5 text-primary" />
@@ -246,7 +203,6 @@ const ContactSection = () => {
                 </div>
               </div>
 
-              {/* Hours */}
               <div className="flex items-start gap-4 pt-4 border-t border-white/10">
                 <div className="w-10 h-10 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0 mt-1">
                   <Clock className="w-5 h-5 text-primary" />
@@ -273,7 +229,6 @@ const ContactSection = () => {
               </div>
             </div>
 
-            {/* Map */}
             <div className="glass rounded-2xl overflow-hidden border border-white/10 aspect-video">
               <iframe
                 title="FixurDevice Location in Bangalore"
@@ -288,10 +243,7 @@ const ContactSection = () => {
             </div>
           </div>
 
-          {/* Right: Booking Form + Quick Actions */}
           <div className="space-y-6">
-            
-            {/* Quick Actions */}
             <div className="glass rounded-2xl p-6 border border-white/10">
               <h3 className="text-xl font-bold text-white mb-4">Quick Actions</h3>
               <div className="space-y-3">
@@ -321,7 +273,6 @@ const ContactSection = () => {
               </div>
             </div>
 
-            {/* Booking Form */}
             <div id="contact-form" className="glass rounded-2xl p-6 border border-white/10">
               <h3 className="text-xl font-bold text-white mb-4">Book Your Repair</h3>
 
@@ -433,20 +384,8 @@ const ContactSection = () => {
             </div>
           </div>
         </div>
-
-        {/* Trust Section */}
-        <div className="grid sm:grid-cols-3 gap-6 animate-on-scroll px-4" style={{ animationDelay: '0.2s' }}>
-          {contactConfig.trustStats.map((stat, i) => (
-            <div key={i} className="glass rounded-2xl p-6 text-center border border-white/10 hover:border-white/20 transition-all duration-300">
-              <div className="text-3xl mb-2">{stat.icon}</div>
-              <p className="font-bold text-white text-sm sm:text-base">{stat.label}</p>
-              <p className="text-xs sm:text-sm text-gray-400">{stat.desc}</p>
-            </div>
-          ))}
-        </div>
       </div>
 
-      {/* Animations */}
       <style>{`
         .animate-on-scroll {
           animation: fade-up 0.6s ease-out forwards;
