@@ -87,6 +87,14 @@ const models: ModelItem[] = [
     name: 'iPhone SE (3rd Gen)',
     image: 'iphonese3.png.png',
   },
+    {
+    name: 'I-watch',
+    image: 'mac watch.png',
+  },
+    {
+    name: 'Mackbooks',
+    image: 'mackbook.png',
+  },
 ];
 
 const ModelsGrid = () => {
